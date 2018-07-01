@@ -9,6 +9,7 @@ import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.domain.Question;
 import ru.sergey_gusarov.hw2.domain.results.IntervieweeResultBase;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.exception.DaoException;
 import ru.sergey_gusarov.hw2.repository.QuestionRepository;
 import ru.sergey_gusarov.hw2.service.testing.TestingService;
 import ru.sergey_gusarov.hw2.service.testing.results.ShowResutlsService;
@@ -23,7 +24,7 @@ public class UserTesting {
     private static Logger log = LoggerFactory.getLogger(UserTesting.class);
 
     public static void main(String[] args) {
-        //Locale.setDefault(Locale.ENGLISH); - для настройки
+        //Locale.setDefault(Locale.ENGLISH); //- для настройки, если не выбирается автоматически
         System.out.println(Locale.getDefault());
 
         log.debug("Try load spring context");
@@ -56,12 +57,18 @@ public class UserTesting {
             System.err.println("\n" + context.getMessage("main.exception", null, Locale.getDefault()));
             log.error("Real error", ex);
             return;
+        } catch (DaoException ex) {
+            ex.printStackTrace();
+            ex.printMessage();
+            log.error("Dao error", ex);
+            return;
         } catch (BizLogicException ex) {
             ex.printStackTrace();
             ex.printMessage();
             log.error("Logic error", ex);
             return;
         }
+
         System.out.println("\n" + context.getMessage("main.end.test", null, Locale.getDefault()));
     }
 }

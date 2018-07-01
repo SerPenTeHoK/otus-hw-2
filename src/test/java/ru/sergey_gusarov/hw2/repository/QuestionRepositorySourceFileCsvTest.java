@@ -6,6 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.sergey_gusarov.hw2.config.AppConfigRus;
 import ru.sergey_gusarov.hw2.domain.Question;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.exception.DaoException;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +30,7 @@ class QuestionRepositorySourceFileCsvTest {
         } catch (IOException ex) {
             ex.printStackTrace();
             assertTrue(false, "IOException");
-        } catch (BizLogicException ex) {
+        } catch (DaoException ex) {
             ex.printStackTrace();
             assertTrue(false, "BizLogicException");
         }

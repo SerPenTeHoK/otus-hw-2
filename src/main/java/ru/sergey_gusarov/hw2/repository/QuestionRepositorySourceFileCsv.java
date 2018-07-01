@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Question;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.exception.DaoException;
 import ru.sergey_gusarov.hw2.util.string.spel.SpelUserFunctions;
 
 import java.io.FileNotFoundException;
@@ -49,15 +50,15 @@ public class QuestionRepositorySourceFileCsv implements QuestionRepository {
     }
 
     @Override
-    public List<Question> findAll() throws IOException, BizLogicException {
+    public List<Question> findAll() throws IOException, DaoException {
         if (questionsFileName != null)
             return loadFile(questionsFileName);
         else
-            throw new BizLogicException(messageSource.getMessage("question.file.dont.set", null,
+            throw new DaoException(messageSource.getMessage("question.file.dont.set", null,
                     Locale.getDefault()));
     }
 
-    private List<Question> loadFile(String fileName) throws IOException, BizLogicException {
+    private List<Question> loadFile(String fileName) throws IOException, DaoException {
         List<Question> questionList = new ArrayList<Question>();
         Reader inCsvFile;
         try {
@@ -83,7 +84,7 @@ public class QuestionRepositorySourceFileCsv implements QuestionRepository {
         } catch (IOException ex) {
             throw ex;
         } catch (IllegalStateException | IllegalArgumentException ex) {
-            throw new BizLogicException(messageSource.getMessage("question.file.error.read", null,
+            throw new DaoException(messageSource.getMessage("question.file.error.read", null,
                     Locale.getDefault()), ex);
         }
         return questionList;

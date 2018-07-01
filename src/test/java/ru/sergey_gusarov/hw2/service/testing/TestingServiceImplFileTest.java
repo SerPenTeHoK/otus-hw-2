@@ -8,6 +8,7 @@ import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.domain.Question;
 import ru.sergey_gusarov.hw2.domain.results.IntervieweeResultBase;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.exception.DaoException;
 import ru.sergey_gusarov.hw2.repository.QuestionRepository;
 import ru.sergey_gusarov.hw2.util.ResultCheckHelper;
 
@@ -27,7 +28,7 @@ class TestingServiceImplFileTest {
             questions = questionRepository.findAll();
         } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (BizLogicException ex) {
+        } catch (DaoException ex) {
             ex.printStackTrace();
         }
         return questions;

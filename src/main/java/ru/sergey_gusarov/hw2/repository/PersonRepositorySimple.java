@@ -5,6 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.exception.DaoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +19,17 @@ public class PersonRepositorySimple implements PersonRepository {
     private MessageSource messageSource;
 
     @Override
-    public Person findByNameAndSurname(String name, String surname) throws BizLogicException {
+    public Person findByNameAndSurname(String name, String surname) throws DaoException {
         Boolean checkName = name == null || name.trim().isEmpty();
         Boolean checkSurname = surname == null || surname.trim().isEmpty();
         if (checkName && checkSurname)
-            throw new BizLogicException(messageSource.getMessage("person.check.name.surname", null,
+            throw new DaoException(messageSource.getMessage("person.check.name.surname", null,
                     Locale.getDefault()));
         else if (checkName)
-            throw new BizLogicException(messageSource.getMessage("person.check.name", null,
+            throw new DaoException(messageSource.getMessage("person.check.name", null,
                     Locale.getDefault()));
         else if (checkSurname)
-            throw new BizLogicException(messageSource.getMessage("person.check.surname", null,
+            throw new DaoException(messageSource.getMessage("person.check.surname", null,
                     Locale.getDefault()));
         Person person;
         try {

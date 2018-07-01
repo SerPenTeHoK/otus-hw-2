@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
-@Repository
 public class PersonRepositorySimple implements PersonRepository {
     private List<Person> people = new ArrayList<Person>();
 

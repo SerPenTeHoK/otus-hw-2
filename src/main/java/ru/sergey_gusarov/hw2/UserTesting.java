@@ -29,6 +29,8 @@ public class UserTesting {
         log.debug("Try load spring context");
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext();
+        context.register(AppConfigRus.class);
+
         if ("ru_RU".equals(Locale.getDefault().toString()))
             context.register(AppConfigRus.class);
         else

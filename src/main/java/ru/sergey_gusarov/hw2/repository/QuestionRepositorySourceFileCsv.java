@@ -5,10 +5,15 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Repository;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Question;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.util.string.spel.SpelUserFunctions;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-@Repository
+@Repository("questionRepository")
 public class QuestionRepositorySourceFileCsv implements QuestionRepository {
     private final static int QUESTION_START_NUM = 1;
 
@@ -27,8 +32,22 @@ public class QuestionRepositorySourceFileCsv implements QuestionRepository {
 
     @Value("${testing.question.file}")
     private String questionsFileName;
+
     @Value("${testing.question.max_count}")
     private int countQuestionInFile;
+
+    QuestionRepositorySourceFileCsv() {
+        ExpressionParser parser = new SpelExpressionParser();
+        StandardEvaluationContext spelContext = new StandardEvaluationContext();
+        try {
+            spelContext.registerFunction("getLocaleQuestionFile",
+                    SpelUserFunctions.class.getDeclaredMethod("getLocaleQuestionFile", new Class[]{String.class}));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        String some = parser.parseExpression(
+                "#getLocaleQuestionFile('"+ "ru-RU" +"')").getValue(spelContext,  String.class);
+    }
 
     @Override
     public List<Question> findAll() throws IOException, BizLogicException {

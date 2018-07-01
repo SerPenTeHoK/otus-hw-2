@@ -7,17 +7,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import ru.sergey_gusarov.hw2.repository.PersonRepository;
+import ru.sergey_gusarov.hw2.repository.PersonRepositorySimple;
 import ru.sergey_gusarov.hw2.service.testing.TestingService;
 import ru.sergey_gusarov.hw2.service.testing.TestingServiceImplFile;
+import ru.sergey_gusarov.hw2.service.user.PersonService;
+import ru.sergey_gusarov.hw2.service.user.PersonServiceImpl;
 
 
-@Configuration
 @ComponentScan(basePackages = {
         "ru.sergey_gusarov.hw2.repository",
         "ru.sergey_gusarov.hw2.service",
         "ru.sergey_gusarov.hw2.util"}
 )
 @PropertySource("classpath:application_en.properties")
+@Configuration
 public class AppConfigDefault {
     @Bean
     public PropertySourcesPlaceholderConfigurer placeholderConfigurerInDev() {
@@ -35,6 +39,16 @@ public class AppConfigDefault {
     @Bean
     TestingService TestingService() {
         return new TestingServiceImplFile();
+    }
+
+    @Bean
+    PersonRepository personRepository() {
+        return new PersonRepositorySimple();
+    }
+
+    @Bean
+    PersonService personService(PersonRepository personRepository) {
+        return new PersonServiceImpl(personRepository);
     }
 
 }

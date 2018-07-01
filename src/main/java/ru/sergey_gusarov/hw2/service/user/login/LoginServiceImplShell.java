@@ -5,6 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.exception.DaoException;
 import ru.sergey_gusarov.hw2.service.user.PersonService;
 
 import java.io.InputStream;
@@ -30,7 +31,7 @@ public class LoginServiceImplShell implements LoginService {
     }
 
     @Override
-    public Person getUser() throws BizLogicException {
+    public Person getUser() throws DaoException {
         String name;
         String surname;
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.exception.DaoException;
 import ru.sergey_gusarov.hw2.repository.PersonRepository;
 
 
@@ -15,7 +16,7 @@ public class PersonServiceImpl implements PersonService {
         this.dao = dao;
     }
 
-    public Person getByNameAndSurname(String name, String surname) throws BizLogicException {
+    public Person getByNameAndSurname(String name, String surname) throws DaoException {
         return dao.findByNameAndSurname(name, surname);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.sergey_gusarov.hw2.config.AppConfigRus;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.exception.DaoException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,27 +23,27 @@ class PersonRepositorySimpleTest {
         context.register(AppConfigRus.class);
         context.refresh();
 
-        PersonRepository personDaoSimple = context.getBean(PersonRepository.class);
+        PersonRepository personRepositorySimple = context.getBean(PersonRepository.class);
 
-        Throwable exceptionNameAndSurname = assertThrows(BizLogicException.class, () ->
-                personDaoSimple.findByNameAndSurname("", "")
+        Throwable exceptionNameAndSurname = assertThrows(DaoException.class, () ->
+                personRepositorySimple.findByNameAndSurname("", "")
         );
         assertEquals("Пустое значение имени и фамилии пользователя", exceptionNameAndSurname.getMessage());
 
-        Throwable exceptionName = assertThrows(BizLogicException.class, () ->
-                personDaoSimple.findByNameAndSurname("", PERSON_SURNAME)
+        Throwable exceptionName = assertThrows(DaoException.class, () ->
+                personRepositorySimple.findByNameAndSurname("", PERSON_SURNAME)
         );
         assertEquals("Пустое значение имени пользователя", exceptionName.getMessage());
 
-        Throwable exceptionSurname = assertThrows(BizLogicException.class, () ->
-                personDaoSimple.findByNameAndSurname(PERSON_NAME, "")
+        Throwable exceptionSurname = assertThrows(DaoException.class, () ->
+                personRepositorySimple.findByNameAndSurname(PERSON_NAME, "")
         );
         assertEquals("Пустое значение фамилии пользователя", exceptionSurname.getMessage());
 
         Person firstPerson = null;
         try {
-            firstPerson = personDaoSimple.findByNameAndSurname(PERSON_NAME, PERSON_SURNAME);
-        } catch (BizLogicException e) {
+            firstPerson = personRepositorySimple.findByNameAndSurname(PERSON_NAME, PERSON_SURNAME);
+        } catch (DaoException e) {
             e.printStackTrace();
             assertFalse(true, "Не удалось создать firstPerson");
         }
@@ -50,8 +51,8 @@ class PersonRepositorySimpleTest {
         assertEquals(PERSON_SURNAME, firstPerson.getSurname());
         Person newTryFirstPerson = null;
         try {
-            newTryFirstPerson = personDaoSimple.findByNameAndSurname(PERSON_NAME, PERSON_SURNAME);
-        } catch (BizLogicException e) {
+            newTryFirstPerson = personRepositorySimple.findByNameAndSurname(PERSON_NAME, PERSON_SURNAME);
+        } catch (DaoException e) {
             e.printStackTrace();
             assertFalse(true, "Не удалось создать newTryFirstPerson");
         }
@@ -60,8 +61,8 @@ class PersonRepositorySimpleTest {
         assertEquals(newTryFirstPerson, firstPerson);
         Person secondPerson = null;
         try {
-            secondPerson = personDaoSimple.findByNameAndSurname("Name2", "Surname2");
-        } catch (BizLogicException e) {
+            secondPerson = personRepositorySimple.findByNameAndSurname("Name2", "Surname2");
+        } catch (DaoException e) {
             e.printStackTrace();
             assertFalse(true, "Не удалось создать secondPerson");
         }

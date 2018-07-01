@@ -5,7 +5,6 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
-import org.springframework.core.env.Environment;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -46,7 +45,7 @@ public class QuestionRepositorySourceFileCsv implements QuestionRepository {
             e.printStackTrace();
         }
         String some = parser.parseExpression(
-                "#getLocaleQuestionFile('"+ "ru-RU" +"')").getValue(spelContext,  String.class);
+                "#getLocaleQuestionFile('" + "ru-RU" + "')").getValue(spelContext, String.class);
     }
 
     @Override

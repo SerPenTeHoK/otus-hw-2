@@ -1,6 +1,5 @@
 package ru.sergey_gusarov.hw2.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.env.Environment;
 import ru.sergey_gusarov.hw2.repository.PersonRepository;
 import ru.sergey_gusarov.hw2.repository.PersonRepositorySimple;
 import ru.sergey_gusarov.hw2.service.testing.TestingService;
@@ -22,6 +20,7 @@ import ru.sergey_gusarov.hw2.service.user.PersonServiceImpl;
         "ru.sergey_gusarov.hw2.util"}
 )
 @PropertySource("classpath:application.properties")
+//@PropertySource("#{systemProperties['user.language']}") - не признаёт SpEL
 @Configuration
 public class AppConfigRus {
     @Bean

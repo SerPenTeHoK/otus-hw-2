@@ -23,7 +23,7 @@ public class UserTesting {
     private static Logger log = LoggerFactory.getLogger(UserTesting.class);
 
     public static void main(String[] args) {
-        Locale.setDefault(Locale.ENGLISH);
+        //Locale.setDefault(Locale.ENGLISH); - для настройки
         System.out.println(Locale.getDefault());
 
         log.debug("Try load spring context");

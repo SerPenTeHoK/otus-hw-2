@@ -1,17 +1,25 @@
 package ru.sergey_gusarov.hw2.service.testing.results;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.results.IntervieweeResultBase;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
 import ru.sergey_gusarov.hw2.util.ResultCheckHelper;
 
+import java.lang.reflect.Array;
+import java.util.Collections;
+import java.util.Locale;
+
 @Service
 public class ShowResultsServiceImplShell implements ShowResutlsService {
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     public void showTestingResult(IntervieweeResultBase intervieweeResult) throws BizLogicException {
         if (intervieweeResult == null) {
-            throw new BizLogicException("Не указан пользователь или по нему нет данных");
+            throw new BizLogicException(messageSource.getMessage("havent.user", null, Locale.getDefault()));
         }
         boolean isTestPass;
         Integer sum;
@@ -21,15 +29,9 @@ public class ShowResultsServiceImplShell implements ShowResutlsService {
         } catch (BizLogicException ex) {
             throw ex;
         }
-
-        StringBuilder sb = new StringBuilder(140);
-        sb.append("Результаты:\n");
-        sb.append("Пользователь: ").append(intervieweeResult.getPerson().getFullName());
         if (isTestPass)
-            sb.append("\nТест пройден! Поздравлем!\n");
+            System.out.println(messageSource.getMessage("result.pass",  new Object[]{intervieweeResult.getPerson().getFullName(), sum}, Locale.getDefault()));
         else
-            sb.append("\nТест вами не пройден. Поробуйте в следующий раз.\n");
-        sb.append("\nНабранные баллы: ").append(sum);
-        System.out.println(sb.toString());
+            System.out.println(messageSource.getMessage("result.fail",  new Object[]{intervieweeResult.getPerson().getFullName(), sum}, Locale.getDefault()));
     }
 }

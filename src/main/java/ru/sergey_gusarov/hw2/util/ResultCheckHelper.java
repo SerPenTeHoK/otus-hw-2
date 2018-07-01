@@ -11,9 +11,9 @@ import java.util.Locale;
 
 public class ResultCheckHelper {
     @Autowired
-    private static MessageSource messageSource;
+    private MessageSource messageSource;
 
-    public Integer getSumScore(List<Question> questions) throws BizLogicException {
+    public int getSumScore(List<Question> questions) throws BizLogicException {
         if (questions == null)
             throw new BizLogicException(messageSource.getMessage("check.result.helper.emptyQuestion.sum", null, Locale.getDefault()));
         Integer sumScore = 0;

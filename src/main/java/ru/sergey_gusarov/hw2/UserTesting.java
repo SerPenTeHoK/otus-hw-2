@@ -34,7 +34,7 @@ public class UserTesting {
         log.debug("Try load spring contex");
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(UserTesting.class);
-        log.debug("finish load spring context");
+        log.debug("Finish load spring context");
 
         Locale.setDefault(Locale.ENGLISH);
         Locale l = Locale.getDefault();
@@ -45,7 +45,7 @@ public class UserTesting {
         LoginService loginService = context.getBean(LoginService.class);
         TestingService testingService = context.getBean(TestingService.class);
         ShowResutlsService showResutlsService = context.getBean(ShowResutlsService.class);
-        log.debug("End getting beans");
+        log.debug("Finish getting beans");
 
         try {
             Person interviewee = loginService.getUser();

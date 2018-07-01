@@ -2,7 +2,9 @@ package ru.sergey_gusarov.hw2.repository;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Question;
@@ -14,10 +16,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Repository
 public class QuestionRepositorySourceFileCsv implements QuestionRepository {
     private final static int QUESTION_START_NUM = 1;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Value("${testing.question.file}")
     private String questionsFileName;
@@ -29,7 +35,8 @@ public class QuestionRepositorySourceFileCsv implements QuestionRepository {
         if (questionsFileName != null)
             return loadFile(questionsFileName);
         else
-            throw new BizLogicException("Не указан файл из которого необходимо прочитать вопросы");
+            throw new BizLogicException(messageSource.getMessage("question.file.dont.set", null,
+                    Locale.getDefault()));
     }
 
     private List<Question> loadFile(String fileName) throws IOException, BizLogicException {
@@ -58,7 +65,8 @@ public class QuestionRepositorySourceFileCsv implements QuestionRepository {
         } catch (IOException ex) {
             throw ex;
         } catch (IllegalStateException | IllegalArgumentException ex) {
-            throw new BizLogicException("При чтение содержимого файла c вопросами произошла ошибка, ошибка в данных или настройках чтения", ex);
+            throw new BizLogicException(messageSource.getMessage("question.file.error.read", null,
+                    Locale.getDefault()), ex);
         }
         return questionList;
     }

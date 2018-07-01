@@ -1,5 +1,7 @@
 package ru.sergey_gusarov.hw2.service.testing;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Person;
@@ -11,19 +13,22 @@ import ru.sergey_gusarov.hw2.exception.BizLogicException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 @Service
 public class TestingServiceImplFile implements TestingService {
-
     private final String ANSWER_SEPARATOR_SYMBOL = ",";
-    private final String HOW_TYPE_ANSWER = "Введите номер ответа. Если несколько, то через запятую, например, 2,3 : ";
+
+    @Autowired
+    private MessageSource messageSource;
 
     private InputStream inputStream = System.in;
 
     public void setInputStream(InputStream inputStream) throws BizLogicException {
         if (inputStream == null)
-            throw new BizLogicException("Передан пустоей поток!");
+            throw new BizLogicException(messageSource.getMessage("null.input.stream", null,
+                    Locale.getDefault()));
         this.inputStream = inputStream;
     }
 
@@ -34,9 +39,9 @@ public class TestingServiceImplFile implements TestingService {
         Integer countQuestion;
         List<Question> intervieweeQuestions = new ArrayList<Question>();
         countQuestion = questions.size();
-
         Scanner inScanner = new Scanner(inputStream);
-        System.out.println("Начинаем тестирование. Всего вопросов: " + countQuestion.toString());
+
+        System.out.println(messageSource.getMessage("testing.start", new String[]{countQuestion.toString()}, Locale.getDefault()));
         try {
             for (int i = 0; i < countQuestion; i++) {
                 Question question = questions.get(i);
@@ -49,22 +54,21 @@ public class TestingServiceImplFile implements TestingService {
             throw ex;
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new BizLogicException("Серёзная ошибка при провередении тестирования.", ex);
+            throw new BizLogicException(messageSource.getMessage("testing.error", null,
+                    Locale.getDefault()), ex);
         }
         intervieweeResultBase.setQuestions(intervieweeQuestions);
         return intervieweeResultBase;
     }
-
-
     private String getShellAnswer(Scanner scanner) {
-        System.out.println(HOW_TYPE_ANSWER);
+        System.out.println(messageSource.getMessage("testing.input.answer",
+                null, Locale.getDefault()));
         return scanner.nextLine();
     }
 
     private void printQuestionAndAnswers(Question question) {
-        System.out.println("Вопрос №" + question.getOrdinalNum());
-        System.out.println(question.getQuestionText());
-        System.out.println("Варианты ответа:");
+        System.out.println(messageSource.getMessage("testing.ask.question",
+                new Object[]{question.getOrdinalNum(), question.getQuestionText()}, Locale.getDefault()));
         Integer numAnswer = 1;
         for (Answer ans : question.getAnswers()) {
             System.out.println(numAnswer.toString() + " " + ans.getAnswerText());
@@ -84,10 +88,12 @@ public class TestingServiceImplFile implements TestingService {
             }
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
-            throw new BizLogicException("Не удалось распознать, что вы ввели: \"" + answerStr + "\"");
+            throw new BizLogicException(messageSource.getMessage("testing.error.input.recognize",
+                    new String[]{answerStr}, Locale.getDefault()));
         } catch (IndexOutOfBoundsException ex) {
             ex.printStackTrace();
-            throw new BizLogicException("Вы ввели значение выходящее за диапазон возможных ответов : \"" + answerStr.trim() + "\"");
+            throw new BizLogicException(messageSource.getMessage("testing.error.input.out.range.answers",
+                    new String[]{answerStr.trim()}, Locale.getDefault()));
         }
         return new Question(question.getId(), question.getCheckScore(), resultAnswers);
     }

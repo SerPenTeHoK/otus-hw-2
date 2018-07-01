@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="personDao" class="ru.sergey_gusarov.hw2.repository.PersonRepositorySimple"/>
+
+    <bean id="personService" class="ru.sergey_gusarov.hw2.service.user.PersonServiceImpl">
+        <constructor-arg index="0" ref="personDao"/>
+    </bean>
+
+    <bean id="loginService" class="ru.sergey_gusarov.hw2.service.user.login.LoginServiceImplShell">
+        <constructor-arg index="0" ref="personService"/>
+    </bean>
+
+    <bean id="questionDaoFileSource" class="ru.sergey_gusarov.hw2.repository.QuestionRepositorySourceFileCsv"/>
+
+    <bean id="testingService" class="ru.sergey_gusarov.hw2.service.testing.TestingServiceImplFile"/>
+
+    <bean id="showResultsService" class="ru.sergey_gusarov.hw2.service.testing.results.ShowResultsServiceImplShell"/>
+
+</beans>
+

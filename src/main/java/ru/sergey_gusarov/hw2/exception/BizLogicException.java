@@ -10,6 +10,6 @@ public class BizLogicException extends Exception {
     }
 
     public void printMessage() {
-        System.err.println("Ошибка в логике работы: " + this.getMessage());
+        System.err.println(this.getMessage());
     }
 }

@@ -2,6 +2,7 @@ package ru.sergey_gusarov.hw2.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Question;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
@@ -9,6 +10,7 @@ import ru.sergey_gusarov.hw2.exception.BizLogicException;
 import java.util.List;
 import java.util.Locale;
 
+@Service
 public class ResultCheckHelper {
     @Autowired
     private MessageSource messageSource;

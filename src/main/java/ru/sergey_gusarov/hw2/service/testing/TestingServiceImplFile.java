@@ -2,7 +2,6 @@ package ru.sergey_gusarov.hw2.service.testing;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.domain.Question;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-@Service
 public class TestingServiceImplFile implements TestingService {
     private final String ANSWER_SEPARATOR_SYMBOL = ",";
 
@@ -60,6 +58,7 @@ public class TestingServiceImplFile implements TestingService {
         intervieweeResultBase.setQuestions(intervieweeQuestions);
         return intervieweeResultBase;
     }
+
     private String getShellAnswer(Scanner scanner) {
         System.out.println(messageSource.getMessage("testing.input.answer",
                 null, Locale.getDefault()));
@@ -88,7 +87,7 @@ public class TestingServiceImplFile implements TestingService {
             }
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
-            throw new BizLogicException(messageSource.getMessage("testing.error.input.recognize",
+            throw new BizLogicException(messageSource.getMessage("testing.error.input.cant.recognize",
                     new String[]{answerStr}, Locale.getDefault()));
         } catch (IndexOutOfBoundsException ex) {
             ex.printStackTrace();

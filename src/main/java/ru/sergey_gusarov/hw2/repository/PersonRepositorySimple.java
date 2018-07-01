@@ -2,7 +2,6 @@ package ru.sergey_gusarov.hw2.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;

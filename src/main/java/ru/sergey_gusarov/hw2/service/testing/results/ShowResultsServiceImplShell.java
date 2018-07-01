@@ -7,12 +7,12 @@ import ru.sergey_gusarov.hw2.domain.results.IntervieweeResultBase;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
 import ru.sergey_gusarov.hw2.util.ResultCheckHelper;
 
-import java.lang.reflect.Array;
-import java.util.Collections;
 import java.util.Locale;
 
 @Service
 public class ShowResultsServiceImplShell implements ShowResutlsService {
+    @Autowired
+    ResultCheckHelper resultCheckHelper;
     @Autowired
     private MessageSource messageSource;
 
@@ -24,14 +24,16 @@ public class ShowResultsServiceImplShell implements ShowResutlsService {
         boolean isTestPass;
         Integer sum;
         try {
-            isTestPass = (new ResultCheckHelper()).isTestPass(intervieweeResult.getQuestions());
-            sum = (new ResultCheckHelper()).getSumScore(intervieweeResult.getQuestions());
+            isTestPass = resultCheckHelper.isTestPass(intervieweeResult.getQuestions());
+            sum = resultCheckHelper.getSumScore(intervieweeResult.getQuestions());
         } catch (BizLogicException ex) {
             throw ex;
         }
         if (isTestPass)
-            System.out.println(messageSource.getMessage("result.pass",  new Object[]{intervieweeResult.getPerson().getFullName(), sum}, Locale.getDefault()));
+            System.out.println(messageSource.getMessage("result.pass", new Object[]{
+                    intervieweeResult.getPerson().getFullName(), sum}, Locale.getDefault()));
         else
-            System.out.println(messageSource.getMessage("result.fail",  new Object[]{intervieweeResult.getPerson().getFullName(), sum}, Locale.getDefault()));
+            System.out.println(messageSource.getMessage("result.fail", new Object[]{
+                    intervieweeResult.getPerson().getFullName(), sum}, Locale.getDefault()));
     }
 }

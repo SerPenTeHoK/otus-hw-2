@@ -8,8 +8,5 @@ import ru.sergey_gusarov.hw2.exception.BizLogicException;
 import java.util.List;
 
 public interface TestingService {
-
     IntervieweeResultBase startTest(List<Question> questions, Person interviewee) throws BizLogicException;
-
-
 }

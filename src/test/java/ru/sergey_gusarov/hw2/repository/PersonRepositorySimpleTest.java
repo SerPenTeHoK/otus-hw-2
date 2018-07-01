@@ -2,6 +2,8 @@ package ru.sergey_gusarov.hw2.repository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.sergey_gusarov.hw2.config.AppConfigRus;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
 
@@ -14,7 +16,13 @@ class PersonRepositorySimpleTest {
     @Test
     @DisplayName("Поиск пользователя по фамилии и имени")
     void findByNameAndSurname() {
-        PersonRepositorySimple personDaoSimple = new PersonRepositorySimple();
+
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext();
+        context.register(AppConfigRus.class);
+        context.refresh();
+
+        PersonRepository personDaoSimple = context.getBean(PersonRepository.class);
 
         Throwable exceptionNameAndSurname = assertThrows(BizLogicException.class, () ->
                 personDaoSimple.findByNameAndSurname("", "")

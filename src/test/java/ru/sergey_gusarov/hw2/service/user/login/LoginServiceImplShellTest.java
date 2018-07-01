@@ -2,12 +2,10 @@ package ru.sergey_gusarov.hw2.service.user.login;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.sergey_gusarov.hw2.repository.PersonRepository;
-import ru.sergey_gusarov.hw2.repository.PersonRepositorySimple;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.sergey_gusarov.hw2.config.AppConfigRus;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
-import ru.sergey_gusarov.hw2.service.user.PersonService;
-import ru.sergey_gusarov.hw2.service.user.PersonServiceImpl;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -20,14 +18,17 @@ class LoginServiceImplShellTest {
     @Test
     @DisplayName("Получение пользователя")
     void getUser() {
-        PersonRepository personRepositorySimple = new PersonRepositorySimple();
-        PersonService personService = new PersonServiceImpl(personRepositorySimple);
-        LoginServiceImplShell loginServiceImplShell = new LoginServiceImplShell(personService);
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext();
+        context.register(AppConfigRus.class);
+        context.refresh();
+
+        LoginService loginService = context.getBean(LoginService.class);
 
         Throwable trySetNullForInputStream = assertThrows(BizLogicException.class, () ->
-                loginServiceImplShell.setInputStream(null)
+                ((LoginServiceImplShell) loginService).setInputStream(null)
         );
-        assertEquals("Передан пустой поток!", trySetNullForInputStream.getMessage(), "Обратботка передачи пустого потока ввода");
+        assertEquals("Передан пустой поток!", trySetNullForInputStream.getMessage(), "Обработка передачи пустого потока ввода");
 
         String text = "Name1\nSurname1";
         byte[] buffer = text.getBytes();
@@ -35,12 +36,12 @@ class LoginServiceImplShellTest {
         BufferedInputStream bis1 = new BufferedInputStream(in1);
 
         assertDoesNotThrow(() ->
-                        loginServiceImplShell.setInputStream(bis1)
+                        ((LoginServiceImplShell) loginService).setInputStream(bis1)
                 , "Установка тестового потока ввода прошла не успешно");
 
         AtomicReference<Person> atomicReference = new AtomicReference<Person>();
         assertDoesNotThrow(() -> {
-                    atomicReference.set(loginServiceImplShell.getUser());
+                    atomicReference.set(loginService.getUser());
                 }
                 , "Пользователь поднят успешно");
         Person firstTryGetPerson = atomicReference.get();
@@ -50,11 +51,11 @@ class LoginServiceImplShellTest {
         ByteArrayInputStream in2 = new ByteArrayInputStream(buffer);
         BufferedInputStream bis2 = new BufferedInputStream(in2);
         assertDoesNotThrow(() ->
-                        loginServiceImplShell.setInputStream(bis2)
+                        ((LoginServiceImplShell) loginService).setInputStream(bis2)
                 , "Установка тестового потока ввода прошла не успешно");
         //Повторный вызов пользователя
         assertDoesNotThrow(() -> {
-                    Person person = loginServiceImplShell.getUser();
+                    Person person = loginService.getUser();
                     atomicReference.set(person);
                 }
                 , "Пользователь поднят не успешно");

@@ -2,37 +2,37 @@ package ru.sergey_gusarov.hw2.repository;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Question;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
+@Repository
 public class QuestionRepositorySourceFileCsv implements QuestionRepository {
     private final static int QUESTION_START_NUM = 1;
 
+    @Value("${testing.question.file}")
+    private String questionsFileName;
+    @Value("${testing.question.max_count}")
+    private int countQuestionInFile;
+
     @Override
     public List<Question> findAll() throws IOException, BizLogicException {
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("src/main/resources/app.property"));
-        String questionsFileName = properties.getProperty("testing.question.file",
-                "src/main/resources/testQuestions.csv");
         if (questionsFileName != null)
             return loadFile(questionsFileName);
         else
             throw new BizLogicException("Не указан файл из которого необходимо прочитать вопросы");
-
     }
 
     private List<Question> loadFile(String fileName) throws IOException, BizLogicException {
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("src/main/resources/app.property"));
-        Integer countQuestionInFile = Integer.valueOf(properties.getProperty("testing.question.max_count",
-                "4"));
-
         List<Question> questionList = new ArrayList<Question>();
         Reader inCsvFile;
         try {

@@ -2,27 +2,43 @@ package ru.sergey_gusarov.hw2;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.sergey_gusarov.hw2.repository.QuestionRepository;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.domain.Question;
 import ru.sergey_gusarov.hw2.domain.results.IntervieweeResultBase;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
+import ru.sergey_gusarov.hw2.repository.QuestionRepository;
 import ru.sergey_gusarov.hw2.service.testing.TestingService;
 import ru.sergey_gusarov.hw2.service.testing.results.ShowResutlsService;
 import ru.sergey_gusarov.hw2.service.user.login.LoginService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
-
+@Configuration
+@ComponentScan
+@PropertySource("classpath:application.properties")
 public class UserTesting {
     private static Logger log = LoggerFactory.getLogger(UserTesting.class);
 
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurerInDev() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
     public static void main(String[] args) {
         log.debug("Try load spring contex");
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
-        log.debug("finish load spring contex");
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(UserTesting.class);
+        log.debug("finish load spring context");
+
+        Locale.setDefault(Locale.ENGLISH);
+        Locale l = Locale.getDefault();
+        System.out.println(l.toLanguageTag());
 
         log.debug("Try get beans");
         QuestionRepository questionRepository = context.getBean(QuestionRepository.class);
@@ -38,7 +54,7 @@ public class UserTesting {
             showResutlsService.showTestingResult(intervieweeResult);
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.err.println("\nТестирование перервано обратитесь к разработчику, скопировав весь текст ошибки.");
+            System.err.println("\n" + context.getMessage("main.exception", null, Locale.getDefault()));
             log.error("Real error", ex);
             return;
         } catch (BizLogicException ex) {
@@ -47,6 +63,15 @@ public class UserTesting {
             log.error("Logic error", ex);
             return;
         }
-        System.out.println("\nТестирование окончено.");
+        System.out.println("\n"+context.getMessage("main.end.test", null, Locale.getDefault()));
     }
+
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
+        ms.setBasenames("/i18/ExceptionMessages", "/i18/ShellMessage");
+        ms.setDefaultEncoding("UTF-8");
+        return ms;
+    }
+
 }

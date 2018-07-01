@@ -1,5 +1,6 @@
 package ru.sergey_gusarov.hw2.service.testing;
 
+import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.domain.Question;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Service
 public class TestingServiceImplFile implements TestingService {
 
     private final String ANSWER_SEPARATOR_SYMBOL = ",";

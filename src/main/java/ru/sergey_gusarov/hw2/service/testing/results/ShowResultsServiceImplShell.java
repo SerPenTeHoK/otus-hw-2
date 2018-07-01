@@ -1,9 +1,11 @@
 package ru.sergey_gusarov.hw2.service.testing.results;
 
+import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.results.IntervieweeResultBase;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
 import ru.sergey_gusarov.hw2.util.ResultCheckHelper;
 
+@Service
 public class ShowResultsServiceImplShell implements ShowResutlsService {
 
     @Override
@@ -14,8 +16,8 @@ public class ShowResultsServiceImplShell implements ShowResutlsService {
         boolean isTestPass;
         Integer sum;
         try {
-            isTestPass = ResultCheckHelper.isTestPass(intervieweeResult.getQuestions());
-            sum = ResultCheckHelper.getSumScore(intervieweeResult.getQuestions());
+            isTestPass = (new ResultCheckHelper()).isTestPass(intervieweeResult.getQuestions());
+            sum = (new ResultCheckHelper()).getSumScore(intervieweeResult.getQuestions());
         } catch (BizLogicException ex) {
             throw ex;
         }

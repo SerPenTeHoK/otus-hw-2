@@ -1,5 +1,7 @@
 package ru.sergey_gusarov.hw2.repository;
 
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Repository;
 import ru.sergey_gusarov.hw2.domain.Person;
 import ru.sergey_gusarov.hw2.exception.BizLogicException;
 
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Repository
 public class PersonRepositorySimple implements PersonRepository {
     private List<Person> people = new ArrayList<Person>();
 

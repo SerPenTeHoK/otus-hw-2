@@ -2,7 +2,7 @@ package ru.sergey_gusarov.hw2.util.string.spel;
 
 import java.util.Locale;
 
-public class SpelUserFunctions {
+public class  SpelUserFunctions {
     public static String getLocaleQuestionFile(String input) {
         if (input == null)
             return "${testing.question.file}";

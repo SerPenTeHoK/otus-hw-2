@@ -10,7 +10,7 @@ import ru.sergey_gusarov.hw2.exception.DaoException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PersonRepositorySimpleTest {
+class  PersonRepositorySimpleTest {
     private final static String PERSON_NAME = "Name1";
     private final static String PERSON_SURNAME = "Surname1";
 
@@ -20,22 +20,22 @@ class PersonRepositorySimpleTest {
 
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext();
-        context.register(AppConfigRus.class);
+        context.register(AppConfigRus.class );
         context.refresh();
 
-        PersonRepository personRepositorySimple = context.getBean(PersonRepository.class);
+        PersonRepository personRepositorySimple = context.getBean(PersonRepository.class );
 
-        Throwable exceptionNameAndSurname = assertThrows(DaoException.class, () ->
+        Throwable exceptionNameAndSurname = assertThrows(DaoException.class , () ->
                 personRepositorySimple.findByNameAndSurname("", "")
         );
         assertEquals("Пустое значение имени и фамилии пользователя", exceptionNameAndSurname.getMessage());
 
-        Throwable exceptionName = assertThrows(DaoException.class, () ->
+        Throwable exceptionName = assertThrows(DaoException.class , () ->
                 personRepositorySimple.findByNameAndSurname("", PERSON_SURNAME)
         );
         assertEquals("Пустое значение имени пользователя", exceptionName.getMessage());
 
-        Throwable exceptionSurname = assertThrows(DaoException.class, () ->
+        Throwable exceptionSurname = assertThrows(DaoException.class , () ->
                 personRepositorySimple.findByNameAndSurname(PERSON_NAME, "")
         );
         assertEquals("Пустое значение фамилии пользователя", exceptionSurname.getMessage());

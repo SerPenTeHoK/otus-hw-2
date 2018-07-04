@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-public class ResultCheckHelper {
+public class  ResultCheckHelper {
     @Autowired
     private MessageSource messageSource;
 

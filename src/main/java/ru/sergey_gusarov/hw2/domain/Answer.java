@@ -1,6 +1,6 @@
 package ru.sergey_gusarov.hw2.domain;
 
-public class Answer {
+public class  Answer {
     private int id;
     private String answerText;
     private int score;

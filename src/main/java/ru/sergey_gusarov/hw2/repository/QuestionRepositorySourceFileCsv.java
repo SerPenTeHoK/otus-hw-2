@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Repository("questionRepository")
-public class QuestionRepositorySourceFileCsv implements QuestionRepository {
+public class  QuestionRepositorySourceFileCsv implements QuestionRepository {
     private final static int QUESTION_START_NUM = 1;
 
     @Autowired
@@ -41,12 +41,12 @@ public class QuestionRepositorySourceFileCsv implements QuestionRepository {
         StandardEvaluationContext spelContext = new StandardEvaluationContext();
         try {
             spelContext.registerFunction("getLocaleQuestionFile",
-                    SpelUserFunctions.class.getDeclaredMethod("getLocaleQuestionFile", new Class[]{String.class}));
+                    SpelUserFunctions.class .getDeclaredMethod("getLocaleQuestionFile", new class []{String.class }));
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
         String some = parser.parseExpression(
-                "#getLocaleQuestionFile('" + "ru-RU" + "')").getValue(spelContext, String.class);
+                "#getLocaleQuestionFile('" + "ru-RU" + "')").getValue(spelContext, String.class );
     }
 
     @Override

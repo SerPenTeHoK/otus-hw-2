@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class TestingServiceImplFile implements TestingService {
+public class  TestingServiceImplFile implements TestingService {
     private final String ANSWER_SEPARATOR_SYMBOL = ",";
 
     @Autowired

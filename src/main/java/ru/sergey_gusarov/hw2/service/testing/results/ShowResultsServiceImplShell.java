@@ -10,7 +10,7 @@ import ru.sergey_gusarov.hw2.util.ResultCheckHelper;
 import java.util.Locale;
 
 @Service
-public class ShowResultsServiceImplShell implements ShowResutlsService {
+public class  ShowResultsServiceImplShell implements ShowResutlsService {
     @Autowired
     ResultCheckHelper resultCheckHelper;
     @Autowired

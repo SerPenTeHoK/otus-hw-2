@@ -19,10 +19,10 @@ import ru.sergey_gusarov.hw2.service.user.PersonServiceImpl;
         "ru.sergey_gusarov.hw2.service",
         "ru.sergey_gusarov.hw2.util"}
 )
-@PropertySource("classpath:application.properties")
+@PropertySource("class path:application.properties")
 //@PropertySource("#{systemProperties['user.language']}") - не признаёт SpEL
 @Configuration
-public class AppConfigRus {
+public class  AppConfigRus {
     @Bean
     public PropertySourcesPlaceholderConfigurer placeholderConfigurerInDev() {
         return new PropertySourcesPlaceholderConfigurer();

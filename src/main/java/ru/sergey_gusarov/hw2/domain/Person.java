@@ -1,6 +1,6 @@
 package ru.sergey_gusarov.hw2.domain;
 
-public class Person {
+public class  Person {
     private String name;
     private String surname;
 

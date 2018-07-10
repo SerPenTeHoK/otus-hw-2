@@ -20,9 +20,9 @@ import ru.sergey_gusarov.hw2.service.user.PersonServiceImpl;
         "ru.sergey_gusarov.hw2.service",
         "ru.sergey_gusarov.hw2.util"}
 )
-@PropertySource("classpath:application_en.properties")
+@PropertySource("class path:application_en.properties")
 @Configuration
-public class AppConfigDefault {
+public class  AppConfigDefault {
     @Bean
     public PropertySourcesPlaceholderConfigurer placeholderConfigurerInDev() {
         return new PropertySourcesPlaceholderConfigurer();

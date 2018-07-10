@@ -8,7 +8,7 @@ import ru.sergey_gusarov.hw2.exception.DaoException;
 import ru.sergey_gusarov.hw2.repository.PersonRepository;
 
 
-public class PersonServiceImpl implements PersonService {
+public class  PersonServiceImpl implements PersonService {
     private PersonRepository dao;
 
     // default @Autowired if one constructor

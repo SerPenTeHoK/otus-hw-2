@@ -13,7 +13,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 @Service
-public class LoginServiceImplShell implements LoginService {
+public class  LoginServiceImplShell implements LoginService {
     private final PersonService personService;
     private InputStream inputStream = System.in;
 

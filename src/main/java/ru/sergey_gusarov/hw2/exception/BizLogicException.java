@@ -1,6 +1,6 @@
 package ru.sergey_gusarov.hw2.exception;
 
-public class BizLogicException extends Exception {
+public class  BizLogicException extends Exception {
     public BizLogicException(String message) {
         super(message);
     }

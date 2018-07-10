@@ -13,19 +13,19 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LoginServiceImplShellTest {
+class  LoginServiceImplShellTest {
 
     @Test
     @DisplayName("Получение пользователя")
     void getUser() {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext();
-        context.register(AppConfigRus.class);
+        context.register(AppConfigRus.class );
         context.refresh();
 
-        LoginService loginService = context.getBean(LoginService.class);
+        LoginService loginService = context.getBean(LoginService.class );
 
-        Throwable trySetNullForInputStream = assertThrows(BizLogicException.class, () ->
+        Throwable trySetNullForInputStream = assertThrows(BizLogicException.class , () ->
                 ((LoginServiceImplShell) loginService).setInputStream(null)
         );
         assertEquals("Передан пустой поток!", trySetNullForInputStream.getMessage(), "Обработка передачи пустого потока ввода");

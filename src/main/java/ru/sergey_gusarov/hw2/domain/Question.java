@@ -2,7 +2,7 @@ package ru.sergey_gusarov.hw2.domain;
 
 import java.util.List;
 
-public class Question {
+public class  Question {
     private int id;
     private int ordinalNum;
     private String questionText;

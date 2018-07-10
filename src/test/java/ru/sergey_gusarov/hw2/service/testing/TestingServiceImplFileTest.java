@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TestingServiceImplFileTest {
+class  TestingServiceImplFileTest {
     private final static int CORRECT_SCORE = 7;
 
     private List<Question> dummyQuestion(QuestionRepository questionRepository) {
@@ -39,11 +39,11 @@ class TestingServiceImplFileTest {
     void startTest() {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext();
-        context.register(AppConfigRus.class);
+        context.register(AppConfigRus.class );
         context.refresh();
 
-        QuestionRepository questionRepository = context.getBean(QuestionRepository.class);
-        TestingService testingService = context.getBean(TestingService.class);
+        QuestionRepository questionRepository = context.getBean(QuestionRepository.class );
+        TestingService testingService = context.getBean(TestingService.class );
 
         Person person = new Person("Name1", "Surname1");
         List<Question> questions = dummyQuestion(questionRepository);
@@ -78,11 +78,11 @@ class TestingServiceImplFileTest {
 
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext();
-        context.register(AppConfigRus.class);
+        context.register(AppConfigRus.class );
         context.refresh();
 
-        QuestionRepository questionRepository = context.getBean(QuestionRepository.class);
-        TestingService testingService = context.getBean(TestingService.class);
+        QuestionRepository questionRepository = context.getBean(QuestionRepository.class );
+        TestingService testingService = context.getBean(TestingService.class );
 
         Person person = new Person("Name1", "Surname1");
         List<Question> questions = dummyQuestion(questionRepository);
@@ -116,11 +116,11 @@ class TestingServiceImplFileTest {
     void startTestErrorInput() {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext();
-        context.register(AppConfigRus.class);
+        context.register(AppConfigRus.class );
         context.refresh();
 
-        QuestionRepository questionRepository = context.getBean(QuestionRepository.class);
-        TestingService testingService = context.getBean(TestingService.class);
+        QuestionRepository questionRepository = context.getBean(QuestionRepository.class );
+        TestingService testingService = context.getBean(TestingService.class );
 
         Person person = new Person("Name1", "Surname1");
         List<Question> questions = dummyQuestion(questionRepository);
@@ -135,7 +135,7 @@ class TestingServiceImplFileTest {
         } catch (BizLogicException e) {
             e.printStackTrace();
         }
-        Throwable exceptionTextInput = assertThrows(BizLogicException.class, () ->
+        Throwable exceptionTextInput = assertThrows(BizLogicException.class , () ->
                 testingService.startTest(questions, person)
         );
         assertEquals("Не удалось распознать, что вы ввели: \" 2a \"",
@@ -150,7 +150,7 @@ class TestingServiceImplFileTest {
         } catch (BizLogicException e) {
             e.printStackTrace();
         }
-        Throwable exceptionOutOfBound = assertThrows(BizLogicException.class, () ->
+        Throwable exceptionOutOfBound = assertThrows(BizLogicException.class , () ->
                 testingService.startTest(questions, person)
         );
         assertEquals("Вы ввели значение выходящее за диапазон возможных ответов : \"5\"",

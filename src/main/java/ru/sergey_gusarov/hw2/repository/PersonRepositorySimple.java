@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
-public class PersonRepositorySimple implements PersonRepository {
+public class  PersonRepositorySimple implements PersonRepository {
     private List<Person> people = new ArrayList<Person>();
 
     @Autowired

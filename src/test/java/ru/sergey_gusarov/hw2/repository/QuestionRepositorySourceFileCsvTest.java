@@ -13,17 +13,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class QuestionRepositorySourceFileCsvTest {
+class  QuestionRepositorySourceFileCsvTest {
 
     @Test
     @DisplayName("Получение вопросов")
     void findAll() {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext();
-        context.register(AppConfigRus.class);
+        context.register(AppConfigRus.class );
         context.refresh();
 
-        QuestionRepository questionRepository = context.getBean(QuestionRepository.class);
+        QuestionRepository questionRepository = context.getBean(QuestionRepository.class );
         List<Question> questions = null;
         try {
             questions = questionRepository.findAll();

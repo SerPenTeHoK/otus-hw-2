@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class UserTesting {
-    private static Logger log = LoggerFactory.getLogger(UserTesting.class);
+public class  UserTesting {
+    private static Logger log = LoggerFactory.getLogger(UserTesting.class );
 
     public static void main(String[] args) {
         //Locale.setDefault(Locale.ENGLISH);  // - для настройки, если не выбирается автоматически
@@ -30,21 +30,21 @@ public class UserTesting {
         log.debug("Try load spring context");
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext();
-        context.register(AppConfigRus.class);
+        context.register(AppConfigRus.class );
 
         if ("ru_RU".equals(Locale.getDefault().toString()))
-            context.register(AppConfigRus.class);
+            context.register(AppConfigRus.class );
         else
-            context.register(AppConfigDefault.class);
+            context.register(AppConfigDefault.class );
 
         context.refresh();
         log.debug("Finish load spring context");
 
         log.debug("Try get beans");
-        QuestionRepository questionRepository = context.getBean(QuestionRepository.class);
-        LoginService loginService = context.getBean(LoginService.class);
-        TestingService testingService = context.getBean(TestingService.class);
-        ShowResutlsService showResutlsService = context.getBean(ShowResutlsService.class);
+        QuestionRepository questionRepository = context.getBean(QuestionRepository.class );
+        LoginService loginService = context.getBean(LoginService.class );
+        TestingService testingService = context.getBean(TestingService.class );
+        ShowResutlsService showResutlsService = context.getBean(ShowResutlsService.class );
         log.debug("Finish getting beans");
 
         try {

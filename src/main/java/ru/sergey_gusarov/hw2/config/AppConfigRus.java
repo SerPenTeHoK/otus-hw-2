@@ -16,13 +16,15 @@ import ru.sergey_gusarov.hw2.service.user.PersonServiceImpl;
 
 @ComponentScan(basePackages = {
         "ru.sergey_gusarov.hw2.repository",
+//И всё равно не понимаю, зачем вынесли..
+// вынес для хранения всех настроек в одном месте - настроечном файле
         "ru.sergey_gusarov.hw2.service",
         "ru.sergey_gusarov.hw2.util"}
 )
-@PropertySource("class path:application.properties")
-//@PropertySource("#{systemProperties['user.language']}") - не признаёт SpEL
 @Configuration
-public class  AppConfigRus {
+@PropertySource("classpath:/application.properties")
+public class AppConfigRus {
+
     @Bean
     public PropertySourcesPlaceholderConfigurer placeholderConfigurerInDev() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -31,25 +33,25 @@ public class  AppConfigRus {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-        ms.setBasenames("/i18/ExceptionMessages", "/i18/ShellMessage");
+        //Ну и на будущее - нужно строчными называть. От этого масса проблем вохникает на windows|linux машинах.
+        //ок
+        ms.setBasenames("/i18/exception-messages", "/i18/shell-message");
         ms.setDefaultEncoding("UTF-8");
         return ms;
     }
 
     @Bean
-    TestingService TestingService() {
-        return new TestingServiceImplFile();
+    TestingService testingService(MessageSource messageSource) {
+        return new TestingServiceImplFile(messageSource);
     }
 
     @Bean
-    PersonRepository personRepository() {
-        return new PersonRepositorySimple();
+    PersonRepository personRepository(MessageSource messageSource) {
+        return new PersonRepositorySimple(messageSource);
     }
 
     @Bean
     PersonService personService(PersonRepository personRepository) {
         return new PersonServiceImpl(personRepository);
     }
-
-
 }

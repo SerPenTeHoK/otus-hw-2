@@ -6,9 +6,9 @@ import ru.sergey_gusarov.hw2.domain.Question;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class  IntervieweeResultBase {
-    Person person;
-    List<Question> questions = new ArrayList<Question>();
+public abstract class IntervieweeResultBase {
+    private Person person;
+    private List<Question> questions = new ArrayList<Question>();
 
     public IntervieweeResultBase(Person person) {
         this.person = person;

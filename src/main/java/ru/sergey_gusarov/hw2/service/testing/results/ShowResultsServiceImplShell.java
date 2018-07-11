@@ -1,6 +1,5 @@
 package ru.sergey_gusarov.hw2.service.testing.results;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.results.IntervieweeResultBase;
@@ -10,11 +9,14 @@ import ru.sergey_gusarov.hw2.util.ResultCheckHelper;
 import java.util.Locale;
 
 @Service
-public class  ShowResultsServiceImplShell implements ShowResutlsService {
-    @Autowired
-    ResultCheckHelper resultCheckHelper;
-    @Autowired
-    private MessageSource messageSource;
+public class ShowResultsServiceImplShell implements ShowResultsService {
+    private final ResultCheckHelper resultCheckHelper;
+    private final MessageSource messageSource;
+
+    public ShowResultsServiceImplShell(ResultCheckHelper resultCheckHelper, MessageSource messageSource) {
+        this.resultCheckHelper = resultCheckHelper;
+        this.messageSource = messageSource;
+    }
 
     @Override
     public void showTestingResult(IntervieweeResultBase intervieweeResult) throws BizLogicException {
@@ -24,6 +26,8 @@ public class  ShowResultsServiceImplShell implements ShowResutlsService {
         boolean isTestPass;
         Integer sum;
         try {
+            //Ну нет, это полноценные зависимости бина - нужно прописывапть в зависимости, иначе магия с пропертями и зависомстяи не спработает.
+            // было сделано в следующем было исправлено
             isTestPass = resultCheckHelper.isTestPass(intervieweeResult.getQuestions());
             sum = resultCheckHelper.getSumScore(intervieweeResult.getQuestions());
         } catch (BizLogicException ex) {

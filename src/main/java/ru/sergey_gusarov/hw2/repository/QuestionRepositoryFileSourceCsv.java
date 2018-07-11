@@ -2,18 +2,12 @@ package ru.sergey_gusarov.hw2.repository;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Repository;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Question;
-import ru.sergey_gusarov.hw2.exception.BizLogicException;
 import ru.sergey_gusarov.hw2.exception.DaoException;
-import ru.sergey_gusarov.hw2.util.string.spel.SpelUserFunctions;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,30 +17,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-@Repository("questionRepository")
-public class  QuestionRepositorySourceFileCsv implements QuestionRepository {
+@Repository("questionRepositoryFile")
+public class QuestionRepositoryFileSourceCsv implements QuestionRepositoryFile {
     private final static int QUESTION_START_NUM = 1;
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
-    @Value("${testing.question.file}")
-    private String questionsFileName;
+    private final int countQuestionInFile;
+    private final String questionsFileName;
 
-    @Value("${testing.question.max_count}")
-    private int countQuestionInFile;
-
-    QuestionRepositorySourceFileCsv() {
-        ExpressionParser parser = new SpelExpressionParser();
-        StandardEvaluationContext spelContext = new StandardEvaluationContext();
-        try {
-            spelContext.registerFunction("getLocaleQuestionFile",
-                    SpelUserFunctions.class .getDeclaredMethod("getLocaleQuestionFile", new class []{String.class }));
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+    //А договривались через конструктор.
+    // Ок - на полях = bad practice
+    public QuestionRepositoryFileSourceCsv(@Value("${testing.question.file}") String questionsFileName,
+                                           @Value("${testing.question.max_count}") int countQuestionInFile,
+                                           MessageSource messageSource) {
+        this.messageSource = messageSource;
+        this.countQuestionInFile = countQuestionInFile;
+        String lang = Locale.getDefault().toString();
+        if ("ru_RU".equals(lang))
+            this.questionsFileName = questionsFileName;
+        else {
+            if (lang.contains("_"))
+                lang = lang.substring(0, lang.indexOf("_"));
+            String sb = questionsFileName.substring(0, questionsFileName.lastIndexOf(".")) +
+                    "_" + lang +
+                    questionsFileName.substring(questionsFileName.lastIndexOf("."), questionsFileName.length());
+            this.questionsFileName = sb;
         }
-        String some = parser.parseExpression(
-                "#getLocaleQuestionFile('" + "ru-RU" + "')").getValue(spelContext, String.class );
     }
 
     @Override

@@ -1,6 +1,5 @@
 package ru.sergey_gusarov.hw2.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.Answer;
@@ -11,9 +10,14 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-public class  ResultCheckHelper {
-    @Autowired
-    private MessageSource messageSource;
+public class ResultCheckHelper {
+    // Параметр констркутора.
+    // Ок
+    private final MessageSource messageSource;
+
+    public ResultCheckHelper(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     public int getSumScore(List<Question> questions) throws BizLogicException {
         if (questions == null)

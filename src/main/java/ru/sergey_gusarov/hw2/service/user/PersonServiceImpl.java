@@ -1,15 +1,14 @@
 package ru.sergey_gusarov.hw2.service.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw2.domain.Person;
-import ru.sergey_gusarov.hw2.exception.BizLogicException;
 import ru.sergey_gusarov.hw2.exception.DaoException;
 import ru.sergey_gusarov.hw2.repository.PersonRepository;
 
 
-public class  PersonServiceImpl implements PersonService {
-    private PersonRepository dao;
+public class PersonServiceImpl implements PersonService {
+    // ТОгда уж и final
+    // Ok проглядел.
+    private final PersonRepository dao;
 
     // default @Autowired if one constructor
     public PersonServiceImpl(PersonRepository dao) {

@@ -1,6 +1,5 @@
 package ru.sergey_gusarov.hw2.service.testing;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import ru.sergey_gusarov.hw2.domain.Answer;
 import ru.sergey_gusarov.hw2.domain.Person;
@@ -15,13 +14,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class  TestingServiceImplFile implements TestingService {
+public class TestingServiceImplFile implements TestingService {
     private final String ANSWER_SEPARATOR_SYMBOL = ",";
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     private InputStream inputStream = System.in;
+
+    public TestingServiceImplFile(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     public void setInputStream(InputStream inputStream) throws BizLogicException {
         if (inputStream == null)
